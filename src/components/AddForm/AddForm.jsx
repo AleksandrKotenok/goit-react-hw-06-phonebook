@@ -1,6 +1,5 @@
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import store from "../../redux/index";
+import { connect } from "react-redux";
 
 import s from "../AddForm/AddForm.module.css";
 
@@ -60,14 +59,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     inputChenged: (e) => {
-      console.log("changed", e.target.name);
       const action = { type: e.target.name, text: e.target.value };
       dispatch(action);
     },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddForm);
-
-AddForm.propTypes = {
-  props: PropTypes.func,
-};

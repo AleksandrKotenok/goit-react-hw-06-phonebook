@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import s from "../Filter/Filter.module.css";
 
@@ -25,15 +24,8 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   onChange: (e) => {
-    console.log("changed", e.target.name);
     const action = { type: e.target.name, text: e.target.value };
     dispatch(action);
   },
 });
-
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
-
-Filter.propTypes = {
-  filter: PropTypes.string,
-  input: PropTypes.func,
-};
