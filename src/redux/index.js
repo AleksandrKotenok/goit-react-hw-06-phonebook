@@ -40,7 +40,6 @@ const contactReducer = (state = initilStore, action) => {
       case 'INPUT_NAME':
          return  Object.assign({}, state, { name:action.text })
       case 'INPUT_NUMBER':
-         console.log(state.number)
          return  Object.assign({}, state, { number: action.text })
       case 'ADD':
          return{...state,items:[...state.items,{
@@ -54,11 +53,13 @@ const contactReducer = (state = initilStore, action) => {
          number:''
          }
       case 'DEL':
-         const deleteContact = (id) =>state.filter((item) => item.id !== id)
-         return { ...initilStore }
-      case filCont.type:
-         return { ...state, card: 'full' }
-      default: return state
+         const  deleteContact= (action)=>state.filter((item) => item.id !== action)
+            
+         
+         return {...state,deleteContact}
+      case 'FILTER':
+         return  Object.assign({}, state, { filter: action.text })
+      default: return {...state}
    }
 };
    

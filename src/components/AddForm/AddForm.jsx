@@ -71,12 +71,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddForm);
 AddForm.propTypes = {
   props: PropTypes.func,
 };
-//const [state, setState] = useState({ name: "a", number: 43564573 });
-
-// const inputChange = ({ target: { name, value } }) => setState({ ...state, [name]: value });
-// const onSubmit = (event) => {
-//   event.preventDefault();
-//   submit(state);
-//   setState({ name: "", number: "" });
-//   console.log();
-// };

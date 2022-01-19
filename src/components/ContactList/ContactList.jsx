@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import store from "../../redux/index";
 import s from "../ContactList/ContactList.module.css";
 
-export const ContactList = ({ contacts, deleteContact }) => {
-  const items = useSelector((state) => state.items);
+export const ContactList = () => {
+  const items = useSelector((state) => state.items.filter(({ name }) => name.toLowerCase().includes(state.filter.toLowerCase())));
   console.log("state", items);
   return (
     <section className={s.contactList}>
@@ -13,7 +13,7 @@ export const ContactList = ({ contacts, deleteContact }) => {
           <li className={s.item} key={item.id}>
             <p className={s.name}>{item.name}:</p>
             <p className={s.number}>{item.number}</p>
-            <button className={s.button} type="button" onClick={() => deleteContact(item.id)}>
+            <button className={s.button} type="button" onClick={(id) => store.dispatch({ type: "DEL" })}>
               Delete
             </button>
           </li>
