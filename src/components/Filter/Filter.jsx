@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import s from "../Filter/Filter.module.css";
 
-export const Filter = ({ filter, input }) => {
+export const Filter = ({ input }) => {
   return (
     <form className={s.form}>
       <label className={s.label} htmlFor={"filter"}>
@@ -12,7 +12,6 @@ export const Filter = ({ filter, input }) => {
         className={s.input}
         type="text"
         name="filter"
-        value={filter}
         onChange={input}
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"

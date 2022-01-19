@@ -1,15 +1,19 @@
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import store from "../../redux/index";
 import s from "../ContactList/ContactList.module.css";
 
 export const ContactList = ({ contacts, deleteContact }) => {
+  const items = useSelector((state) => state.items);
+  console.log("state", items);
   return (
     <section className={s.contactList}>
       <ul className={s.list}>
-        {contacts.map((contact) => (
-          <li className={s.item} key={contact.id}>
-            <p className={s.name}>{contact.name}:</p>
-            <p className={s.number}>{contact.number}</p>
-            <button className={s.button} type="button" onClick={() => deleteContact(contact.id)}>
+        {items.map((item) => (
+          <li className={s.item} key={item.id}>
+            <p className={s.name}>{item.name}:</p>
+            <p className={s.number}>{item.number}</p>
+            <button className={s.button} type="button" onClick={() => deleteContact(item.id)}>
               Delete
             </button>
           </li>

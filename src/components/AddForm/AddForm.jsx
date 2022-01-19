@@ -1,20 +1,13 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { connect } from "react-redux";
+import store from "../../redux/index";
+
 import s from "../AddForm/AddForm.module.css";
 
-export const AddForm = ({ submit }) => {
-  const [state, setState] = useState({ name: "", number: "" });
-
-  const inputChange = ({ target: { name, value } }) => setState({ ...state, [name]: value });
-  const onSubmit = (event) => {
-    event.preventDefault();
-    submit(state);
-    setState({ name: "", number: "" });
-  };
-
+function AddForm(props) {
   return (
     <section className={s.addForm}>
-      <form className={s.form} onSubmit={onSubmit}>
+      <form className={s.form}>
         <label className={s.label} htmlFor={"name"}>
           Name:
         </label>
@@ -22,12 +15,12 @@ export const AddForm = ({ submit }) => {
           id={"name"}
           className={s.input}
           type="text"
-          name="name"
-          value={state.name}
+          name="INPUT_NAME"
+          value={props.name}
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
-          onChange={inputChange}
+          onChange={props.inputChenged}
         />
         <label className={s.label} htmlFor={"tel"}>
           Tel:
@@ -36,20 +29,54 @@ export const AddForm = ({ submit }) => {
           id={"tel"}
           className={s.input}
           type="tel"
-          name="number"
-          value={state.number}
+          name="INPUT_NUMBER"
+          value={props.number}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          onChange={inputChange}
+          onChange={props.inputChenged}
         />
-        <button className={s.button} type="submit">
+        <button
+          className={s.button}
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            store.dispatch({ type: "ADD" });
+            store.dispatch({ type: "CLEAR_FORM" });
+          }}
+        >
           Add contact
         </button>
       </form>
     </section>
   );
+}
+const mapStateToProps = (state) => {
+  return {
+    name: state.name,
+    number: state.number,
+  };
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    inputChenged: (e) => {
+      console.log("changed", e.target.name);
+      const action = { type: e.target.name, text: e.target.value };
+      dispatch(action);
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(AddForm);
+
 AddForm.propTypes = {
-  submit: PropTypes.func,
+  props: PropTypes.func,
 };
+//const [state, setState] = useState({ name: "a", number: 43564573 });
+
+// const inputChange = ({ target: { name, value } }) => setState({ ...state, [name]: value });
+// const onSubmit = (event) => {
+//   event.preventDefault();
+//   submit(state);
+//   setState({ name: "", number: "" });
+//   console.log();
+// };
