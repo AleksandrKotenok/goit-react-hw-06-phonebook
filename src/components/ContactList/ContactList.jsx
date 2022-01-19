@@ -13,7 +13,14 @@ export const ContactList = () => {
           <li className={s.item} key={item.id}>
             <p className={s.name}>{item.name}:</p>
             <p className={s.number}>{item.number}</p>
-            <button className={s.button} type="button" onClick={(id) => store.dispatch({ type: "DEL" })}>
+            <button
+              className={s.button}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                store.dispatch({ type: "DEL", payload: item.id });
+              }}
+            >
               Delete
             </button>
           </li>
