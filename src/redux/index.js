@@ -19,7 +19,6 @@ const initilStore = {
 }
 
 const contactReducer = (state = initilStore, action) => {
-   console.log('reducer', action)
    switch (action.type) {
       case 'INPUT_NAME':
          return  Object.assign({}, state, { name:action.text })
