@@ -1,9 +1,10 @@
 import store from "../../redux/index";
 import { useSelector } from "react-redux";
+
 import s from "../ContactList/ContactList.module.css";
 
 export const ContactList = () => {
-  const items = useSelector((state) => state.items.filter(({ name }) => name.toLowerCase().includes(state.filter.toLowerCase())));
+  const items = useSelector((state) => state.contactReducer.items.filter(({ name }) => name.toLowerCase().includes(state.contactReducer.filter.toLowerCase())));
   return (
     <section className={s.contactList}>
       <ul className={s.list}>

@@ -1,7 +1,6 @@
 
 import { nanoid } from "nanoid";
-import { createStore } from '@reduxjs/toolkit';
-
+import { configureStore,createAction,createReducer } from "@reduxjs/toolkit";
 const initilStore = {
    name: '',
    number:'',
@@ -18,81 +17,39 @@ const initilStore = {
    filter: ''
 }
 
-const contactReducer = (state = initilStore, action) => {
-   switch (action.type) {
-      case 'INPUT_NAME':
-         return  Object.assign({}, state, { name:action.text })
-      case 'INPUT_NUMBER':
-         return  Object.assign({}, state, { number: action.text })
-         case 'FILTER':
-            return  Object.assign({}, state, { filter: action.text })
-      case 'ADD':
-         const isFound = state.items.find(item => item.name.toLowerCase() === state.name.toLowerCase())
-         if (isFound) return window.alert(`${state.name} is already in contacts.`);
-         return{...state,items:[...state.items,{
-            id: nanoid(),
-            name: state.name,
-            number: state.number
-            }]
-         }
-      case 'CLEAR_FORM':
-         return{...state, name: '',
-         number:''
-         }
-      case 'DEL':
-         const deleteContact = (action)=>state.items.filter(({ id }) => id !== action.payload)
-         const itemsAfterDel = deleteContact (action)
-         return {...state,items:[...itemsAfterDel]}
-      default: return {...state}
+//Action creators
+export const inputName = createAction('INPUT_NAME')
+export const inputNum = createAction('INPUT_NUMBER')
+export const filCont = createAction('FILTER')
+export const addCont = createAction('ADD')
+export const clearForm = createAction('CLEAR_FORM')
+export const delCont = createAction('DEL')
+
+// Reducer
+const contactReducer = createReducer(initilStore, {
+   [inputName.type]: (state, {text}) => Object.assign({}, state, { name:text }),
+   [inputNum.type]: (state, {text}) => Object.assign({}, state, { number: text }),
+   [filCont.type]: (state, {text}) => Object.assign({}, state, { filter: text }),
+   [addCont.type]: (state) =>{
+      const isFound = state.items.find(item => item.name.toLowerCase() === state.name.toLowerCase())
+      if (isFound) return window.alert(`${state.name} is already in contacts.`);
+      return{...state,items:[...state.items,{
+         id: nanoid(),
+         name: state.name,
+         number: state.number
+         }]
+      }
+   },
+   [clearForm.type]: (state) => {return {...state, name: '',number:''}},
+   [delCont.type]: (state,action) => {
+      const deleteContact = (action)=>state.items.filter(({ id }) => id !== action.payload)
+      const itemsAfterDel = deleteContact (action)
+      return {...state,items:[...itemsAfterDel]}
    }
-};
-   
-const store = createStore(contactReducer);
+})
+const store = configureStore({
+   reducer: {
+      contactReducer,
+   },
+});
 export default store
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Action creators
-// export const inputName = createAction('INPUT_NAME')
-// export const inputNum = createAction('INPUT_NUMBER')
-// export const addCont = createAction('ADD')
-// export const clearForm = createAction('CLEAR_FORM')
-// export const delCont = createAction('DEL')
-// export const filCont = createAction('FILTER')
-
-
- // Reducer
-// const contactReducer = createReducer(initilStore, {
-//       [inputName]: (state, action) => Object.assign({}, state, { name:action.text }),
-//       [inputNum]: (state, action) => Object.assign({}, state, { number: action.text }),
-//       [addCont]: (state, action) => state,items:[state.items,{
-//                      id: nanoid(),
-//                      name: state.name,
-//                      number: state.number
-//                      }],
-//       [clearForm]: (state, action) =>state, name: '',
-//       number:'',
-//    });
-// const rootReducer = combineReducers({
-//    contactReducer,
-// });
-// Store
-// const store = configureStore({
-//    reducer:{ contactReducer},
-// }); 

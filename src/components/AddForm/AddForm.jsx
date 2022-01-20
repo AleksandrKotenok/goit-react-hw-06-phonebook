@@ -52,8 +52,8 @@ function AddForm(props) {
 }
 const mapStateToProps = (state) => {
   return {
-    name: state.name,
-    number: state.number,
+    name: state.contactReducer.name,
+    number: state.contactReducer.number,
   };
 };
 const mapDispatchToProps = (dispatch) => {
