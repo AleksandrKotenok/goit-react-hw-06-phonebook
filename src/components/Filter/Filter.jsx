@@ -7,7 +7,7 @@ import s from '../Filter/Filter.module.css';
 export default function Filter() {
   const dispatch = useDispatch();
   const filterValue = useSelector(getFilter);
-  const onChange = e => dispatch(filCont(e.currentTarget.value));
+  const onChange = ({ currentTarget: { value } }) => dispatch(filCont(value));
   return (
     <form className={s.form}>
       <label className={s.label} htmlFor={'filter'}>
@@ -17,7 +17,7 @@ export default function Filter() {
         id={'filter'}
         className={s.input}
         type="text"
-        name="FILTER"
+        name="filter"
         value={filterValue}
         onChange={onChange}
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"

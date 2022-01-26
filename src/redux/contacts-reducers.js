@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { filCont, addCont, delCont } from './contacts-actions';
 
-export const initilStore = {
+export const initialStore = {
   contacts: {
     items: [
       { id: 1, name: 'kolya', number: 45454353 },
@@ -18,12 +18,12 @@ export const initilStore = {
   },
 };
 // Reducer
-const contacts = createReducer(initilStore.contacts.items, {
+const contacts = createReducer(initialStore.contacts.items, {
   [addCont]: (state, { payload }) => [payload, ...state],
   [delCont]: (state, { payload }) =>
     state.filter(contact => contact.id !== payload),
 });
-const filter = createReducer(initilStore.contacts.filter, {
+const filter = createReducer(initialStore.contacts.filter, {
   [filCont]: (state, { payload }) => payload,
 });
 
